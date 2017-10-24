@@ -1,16 +1,17 @@
 <!DOCTYPE html>
 <html>
-<head>
-<style>
-  .error {
+  <head>
+    <style>
+      .error {
       color: red;
-  }
-  <title>{{title}}</title>
-</head>
-  <body>
+      }
+    </style>
+    <title>{{title}}</title>
+  </head>
+<body>
     <a href="/blog">Main Blog</a>
     <a href="/newpost">New Post</a>
     {% block content %}
     {% endblock %}
-  </body>
+</body>
 </html>

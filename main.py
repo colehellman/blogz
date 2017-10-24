@@ -21,7 +21,7 @@ class Blog(db.Model):
 def index():
     blogs = Blog.query.all()
     title = "My Blog"
-    return render_template('blog.html',title=title, blogs=blogs)
+    return redirect('/blog')
 
 @app.route('/newpost', methods=['POST', 'GET'])
 def new_post():
@@ -30,19 +30,19 @@ def new_post():
         body = request.form['new_post']
         body_error=''
         title_error=''
-        if title=="" or body=="":
-            if not require_input(title):
+        if title=="":
                 title_error = "A title is required"
-            if not require_input(body):
+        if body=="":
                 body_error = "A body is required"
-            return render_template('newpost.html',title_error=title_error,body_error=body_error)
+        if title=="" or body=="":
+            return render_template('newpost.html',title_error=title_error,body_error=body_error,title=title,body=body)
         else:
                 new_entry = Blog(title, body)
                 db.session.add(new_entry)
                 db.session.commit()
                 return redirect('/blog?id='+str(new_entry.id))
     else:
-        return redirect('/blog')
+        return render_template('newpost.html')
 
 @app.route('/blog', methods=['GET', 'POST'])
 def blog():
